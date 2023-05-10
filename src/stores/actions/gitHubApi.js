@@ -1,22 +1,24 @@
-import { getList, createListItem, updateListItem, deleteListItem } from './_commonEvents';
-import { TeamModel } from '../../models/team';
+import { getList } from './_commonEvents';
+import { ResultsModel, UserResultModel, UserModel, UserRepositoryModel } from '../../models';
 import { uri } from '../../utilities/endpoints';
 
 export const search = "@@team/SEARCH";
 export const getUser = "@@team/GET_USER";
 export const getUserRepos = "@@team/GET_USER_REPOS";
 
-
 export const searchAction = (query) => {
     return async (dispatch) => {
-        let data = await getList(uri.search, {query});
+        let data = await getList(uri.search, {query}, ResultsModel);
+        if (data && data.items && data.items.length > 0) { 
+            data.items = data.items.map((item) => { return new UserResultModel(item); });
+        }
         return dispatch({ type: search, data });
     }
 }
 
 export const getUserAction = (username) => {
     return async (dispatch) => {
-        let data = await getList(uri.getUser, {username});
+        let data = await getList(uri.getUser, {username}, UserModel);
         return dispatch({ type: search, data });
     }
 }
@@ -24,6 +26,9 @@ export const getUserAction = (username) => {
 export const getUserReposAction = (username) => {
     return async (dispatch) => {
         let data = await getList(uri.getUserRepos, {username});
+        if (data && data.length > 0) { 
+            data = data.map((item) => { return new UserRepositoryModel(item); });
+        }
         return dispatch({ type: search, data });
     }
 }
