@@ -7,9 +7,9 @@ export const getUser = "@@team/GET_USER";
 export const getUserRepos = "@@team/GET_USER_REPOS";
 
 
-export const searchAction = (searchTerm) => {
+export const searchAction = (query) => {
     return async (dispatch) => {
-        let data = await getList(uri.search, {searchTerm});
+        let data = await getList(uri.search, {query});
         return dispatch({ type: search, data });
     }
 }
