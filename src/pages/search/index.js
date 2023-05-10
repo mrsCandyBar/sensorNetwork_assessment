@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators } from '../../stores/reducers/account';
+import { actionCreators } from '../../stores/reducers/gitHubApi';
 import { Col, Row, Form } from 'reactstrap';
 import FormFooter from '../../components/form/footer';
 import FormHeader from '../../components/form/header';
 import FormInput from '../../components/form/input';
 
 
-function Login() {
+function Search() {
 
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  const submitForm = (event) => {
-    console.log("submit >>>", email, password);
+  const submitQuery = (event) => {
+    console.log("submit >>>", email);
     event.preventDefault();
   }
 
@@ -24,7 +23,7 @@ function Login() {
         title='Please sign in to your account.'
       />
 
-      <Form onSubmit={submitForm}>
+      <Form onSubmit={submitQuery}>
         <Row className='form-row'>
           <Col md={6}>
             <FormInput
@@ -38,23 +37,11 @@ function Login() {
               required
             />
           </Col>
-          <Col md={6}>
-            <FormInput
-              type='password'
-              name='password'
-              id='password'
-              placeholder='Password here...'
-              label="Password"
-              value={password}
-              onChange={(input) => setPassword(input.target.value)}
-              required
-            />
-          </Col>
         </Row>
 
         <FormFooter
-          action={submitForm}
-          actionText='Sign in'
+          action={submitQuery}
+          actionText='Search'
         />
       </Form>
     </React.Fragment>
@@ -62,6 +49,6 @@ function Login() {
 }
 
 export default connect(
-  (state) => ({ me: state.account.me }),
+  (state) => ({ users: state.gitHub.users }),
   dispatch => bindActionCreators(actionCreators, dispatch)
-)(Login);
+)(Search);

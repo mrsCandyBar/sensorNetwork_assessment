@@ -1,25 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../../assets/css/app.css';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Container, Row, Col } from 'reactstrap';
 
 function Dashboard() {
-  const team = useSelector(state => state.teams.teamMembers);
-  console.log("team", team);
+  const selectedMember = useSelector(state => state.gitHub.selectedUser);
+  console.log("selectedMember >>>", selectedMember);
 
   return (
     <Container>
-      <h1>Team Table</h1>
+      <h1>Selected Member</h1>
 
-      {team?.map((teamMember, index) => {
-        return (
-          <Row key={"user_" + index} className='form-row'>
-            <Col md={6}>{teamMember.fullname}</Col>
-            <Col md={6}>{teamMember.location}</Col>
+      {selectedMember && (
+        <Row className='form-row'>
+            <Col md={6}>{selectedMember.fullname}</Col>
+            <Col md={6}>{selectedMember.location}</Col>
           </Row>
-        )
-      })}
+      )}
     </Container>
   );
 }
