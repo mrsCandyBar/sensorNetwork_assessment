@@ -1,13 +1,10 @@
-const root = "http://localhost:8080/api/v1/";
+const root = "https://api.github.com/";
+// Go to: https://api.github.com/
+// For all possible query commands for github API
 
 export const uri = {
-    // My Account
-    login: root + 'login',
-    logout: root + 'logout',
-    
-    // Team
-    getAllTeamMembers: root + 'usersByOrganization',
-    createTeamMember: root + 'user',
-    updateTeamMember: root + 'user',
-    deleteTeamMember: root + 'user/{id}',
+    // Search, get users and get user repos
+    search: root + 'search/users?q={query}{&page,per_page,sort,order}',
+    getUser: root + 'users/{username}',
+    getUserRepos: root + 'users/{user}/repos{?type,page,per_page,sort}'
 }
