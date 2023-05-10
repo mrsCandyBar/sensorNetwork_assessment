@@ -1,13 +1,11 @@
 
 
 import { combineReducers } from 'redux';
-import { reducer as Account } from './reducers/account';
-import { reducer as Teams } from './reducers/team';
+import { reducer as GitHubApi } from './reducers/gitHubApi';
 
 
 const allReducers = {
-    account: Account,
-    teams: Teams    
+    gitHub: GitHubApi,
 }
 
 export const rootReducer = combineReducers(allReducers);
