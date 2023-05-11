@@ -24,25 +24,32 @@ const SelectedUser = (props) => {
           value="close"
           onClick={() => props.action()} />
 
-        <div>
-          <img src={avatar_url} alt={login} />
-          <p>
-            <big>{login}</big><br />
-            <a href={html_url}>{name}</a><br />
-            {bio}<br /><br />
+        <div className='columns is-vcentered'>
+          <div className='column '>
+            <div className='user-result'>
+              <img src={avatar_url} alt={login} />
+              <p>
+                <big>{login}</big><br />
+                <a href={html_url}>{name}</a><br />
+                {bio}<br /><br />
 
-            {followers} followers<br />
-            and is following {following} users<br /><br />
+                {followers} followers and is following {following} users<br /><br />
 
-            {location}
-          </p>
+                {location}
+              </p>
+            </div>
+          </div>
+
+          <div className='column pr-0'>
+            <div className='cap-height'>
+              {props.userRepos && props.userRepos.length > 0 ? (
+                <HasUserRepos repos_url={repos_url} userRepos={props.userRepos} />
+              ) : (
+                <p>This user does not have any user repos... yet!</p>
+              )}
+            </div>
+          </div>
         </div>
-
-        {props.userRepos && props.userRepos.length > 0 ? (
-          <HasUserRepos repos_url={repos_url} userRepos={props.userRepos} />
-        ) : (
-          <p>This user does not have any user repos... yet!</p>
-        )}
 
       </React.Fragment>
     )
@@ -51,7 +58,7 @@ const SelectedUser = (props) => {
   function HasUserRepos(props) {
     return (
       <div>
-        <h2>Repositories</h2>
+        <h2 className='mt-5'>Repositories</h2>
         <input
           className="button"
           type="submit"
@@ -72,16 +79,18 @@ const SelectedUser = (props) => {
             } = repo;
 
             return (
-              <div key={index}>
+              <div key={index} className='repo-entry p-3 mr-5 mt-5'>
                 <p>
-                  <a href={html_url} target="_blank" rel="noopener noreferrer">{name}</a><br />
+                  <a href={html_url} target="_blank" rel="noopener noreferrer">
+                    {name}
+                    <small> created : {created_at}</small>
+                  </a><br />
                   {description}<br /><br />
                   <small>
-                    created : {created_at}<br />
-                    updated : {updated_at}<br />
-                    fork count : {forks_count}<br />
-                    open issues : {open_issues_count}<br />
-                    watchers : {watchers}
+                    {updated_at && (<>updated : {updated_at}<br /></>)}
+                    {forks_count && (<>fork count : {forks_count}<br /></>)}
+                    {open_issues_count && (<>open issues : {open_issues_count}<br /></>)}
+                    {watchers && (<>watchers : {watchers}</>)}
                   </small>
                 </p>
               </div>
@@ -98,8 +107,12 @@ const SelectedUser = (props) => {
         user={props.user}
         userRepos={props.userRepos}
         action={props.action}
-      /> :
-      <React.Fragment />
+      /> : (
+        <React.Fragment>
+          <p>No userdata here ....</p>
+        </React.Fragment>
+      )
+
   );
 }
 

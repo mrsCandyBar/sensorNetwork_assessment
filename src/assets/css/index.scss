@@ -26,12 +26,114 @@ $input-border-color: transparent;
 $input-shadow: none;
 
 // Import only what you need from Bulma
-@import "node_modules/bulma/sass/utilities/_all.sass";
-@import "node_modules/bulma/sass/base/_all.sass";
-@import "node_modules/bulma/sass/elements/button.sass";
-@import "node_modules/bulma/sass/elements/container.sass";
-@import "node_modules/bulma/sass/elements/title.sass";
-@import "node_modules/bulma/sass/form/_all.sass";
-@import "node_modules/bulma/sass/components/navbar.sass";
-@import "node_modules/bulma/sass/layout/hero.sass";
-@import "node_modules/bulma/sass/layout/section.sass";
+//@import "node_modules/bulma/sass/utilities/_all.sass";
+//@import "node_modules/bulma/sass/base/_all.sass";
+//@import "node_modules/bulma/sass/components/_all.sass";
+//@import "node_modules/bulma/sass/elements/button.sass";
+//@import "node_modules/bulma/sass/elements/container.sass";
+//@import "node_modules/bulma/sass/elements/title.sass";
+//@import "node_modules/bulma/sass/form/_all.sass";
+//@import "node_modules/bulma/sass/components/navbar.sass";
+//@import "node_modules/bulma/sass/layout/hero.sass";
+//@import "node_modules/bulma/sass/layout/section.sass";
+//@import "node_modules/bulma/sass/grid/_all.sass";
+@import "node_modules/bulma/bulma.sass";
+
+// Custom Styling
+html { overflow: hidden;}
+
+.is-fullheight {
+  height: 100vh;
+}
+
+@media all and (max-width: 768px) {
+  .is-fullheight {
+    height: auto;
+  }
+}
+
+.is-maxheight {
+  height: 100%;
+}
+
+.border-right {
+  border-right: 1px solid #dbdbdb;
+  background-color: white;
+}
+
+.border-left {
+  border-left: 1px solid #dbdbdb;
+  background-color: white;
+}
+
+@media all and (max-width: 1128px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media all and (max-width: 768px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@keyframes flyout-modal {
+  0% { right: -66.66%; }
+  100% { right: 0%; }
+}
+
+@keyframes flyout-modal-back {
+  0% { right: 0%; }
+  100% { right: -66.66%; }
+}
+
+.is-absolute {
+  position: absolute;
+  z-index: 10;
+
+  &.is-visible {
+    animation-name: flyout-modal;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    right: -66.66%;
+  }
+
+  &.is-visually-hidden {
+    animation-name: flyout-modal-back;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    right: 0%;
+  }
+}
+
+.close-flyout-menu {
+  position: fixed;
+  top: 0px;
+  margin-left: calc(-3em - 60px);
+}
+
+.cap-height {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+
+// Project Specific Styling
+.user-result {
+  text-align: center;
+  max-width: 300px;
+  margin: 0 auto;
+
+  & img {
+    border-radius: 100% !important;
+    width: 100% !important;
+    margin-bottom: 3rem;
+  }
+}
+
+.repo-entry {
+  border: 3px solid #dbdbdb;
+  border-radius: 5px;
+  background-color: white ;
+}
