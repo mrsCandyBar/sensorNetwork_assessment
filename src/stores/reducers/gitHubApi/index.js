@@ -4,11 +4,23 @@ import {
     getUser, getUserAction,
     getUserRepos, getUserReposAction,
 } from '../../actions/gitHubApi';
+import { 
+    exampleUser, 
+    exampleUserRepoData, 
+    exampleUserResults 
+} from './exampleData';
 
 const initialState = {
-    users: [],
+    //users: null,
     selectedUser: null,
     selectedUserRepos: [],
+
+    // Example Data for styling
+    ///////////////////////////
+    
+    users: exampleUserResults,
+    //selectedUser: exampleUser,
+    //selectedUserRepos: exampleUserRepoData,
 }
 export const actionCreators = {
     search: searchAction,
