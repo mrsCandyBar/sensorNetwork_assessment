@@ -24,4 +24,3 @@ yarn-error.log*
 package-lock.json
 public/css/index.css
 src/assets/css/index.css
-src/assets/css/index.css
