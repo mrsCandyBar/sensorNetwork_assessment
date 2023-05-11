@@ -12,35 +12,50 @@ const SearchGitHub = (props) => {
     props.search(username);
   }
 
-  const selectUser = (username) => {
-    props.getUser(username);
-  }
-
-  const getUserRepositories = (username) => {
-    props.getUserRepositories(username);
+  const selectUser = async(username) => {
+    await props.getUser(username);
+    username && await props.getUserRepos(username);
   }
 
   return (
     <React.Fragment>
-      <Search action={(username) => submitQuery(username)} />
+      <div className="columns is-fullheight is-vcentered p-6 m-0">
+        <div className="column is-one-third is-maxheight border-right">
+          <div className='columns p-5 is-vcentered is-maxheight m-0'>
+            <div className='column'>
+              <Search action={(username) => submitQuery(username)} />
+            </div>
+          </div>
+        </div>
 
-      {props.users && (<Results 
-        action={(username) => selectUser(username)} 
-        results={props.users} 
-      />)}
+        <div className="column p-5 is-two-thirds">
+          <Results
+            action={(username) => selectUser(username)}
+            results={props.users}
+          />
+        </div>
 
-      {props.selectedUser && (<SelectedUser 
-        action={(username) => getUserRepositories(username)} 
-        user={props.selectedUser} 
-        userRepos={props.selectedUserRepos} 
-      />)}
+        {props.selectedUser && (
+          <div className="column is-one-third is-maxheight border-left is-visible is-absolute ">
+            <div className='columns p-5 is-vcentered is-maxheight m-0'>
+              <div className='column'>
+                <SelectedUser
+                  action={() => selectUser()}
+                  user={props.selectedUser}
+                  userRepos={props.selectedUserRepos}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
     </React.Fragment>
   );
 }
 
 export default connect(
-  (state) => ({ 
+  (state) => ({
     users: state.gitHub.users,
     selectedUser: state.gitHub.selectedUser,
     selectedUserRepos: state.gitHub.selectedUserRepos

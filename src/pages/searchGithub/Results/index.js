@@ -1,6 +1,8 @@
 import React from 'react';
 
 const Results = (props) => {
+  console.log("Results props >>>", props);
+  
   return (
     props.results && props.results.users && props.results.users.length > 0 ? (
       <React.Fragment>
@@ -18,7 +20,12 @@ const Results = (props) => {
                 <img src={avatar_url} alt={login} />
                 <p>
                   <big>{login}</big><br />
-                  <input class="button" type="submit" value="More Info" onClick={props.action(login)} />
+                  <input 
+                    className="button" 
+                    type="button" 
+                    value="More Info" 
+                    onClick={() => props.action(login)} 
+                    />
                 </p>
               </div>
             )
@@ -28,8 +35,12 @@ const Results = (props) => {
       </React.Fragment >
     ) : (
       <React.Fragment>
-        <h1>User Results</h1>
-        <p>No user results :(</p>
+        <p className='title'>
+          <small>
+            No user results ;(<br />
+            Try searching for a different user.
+          </small>
+        </p>
       </React.Fragment>
     )
   );

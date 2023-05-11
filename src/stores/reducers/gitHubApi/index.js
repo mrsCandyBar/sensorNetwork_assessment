@@ -4,23 +4,11 @@ import {
     getUser, getUserAction,
     getUserRepos, getUserReposAction,
 } from '../../actions/gitHubApi';
-import { 
-    exampleUser, 
-    exampleUserRepoData, 
-    exampleUserResults 
-} from './exampleData';
 
 const initialState = {
-    //users: null,
+    users: null,
     selectedUser: null,
     selectedUserRepos: [],
-
-    // Example Data for styling
-    ///////////////////////////
-    
-    users: exampleUserResults,
-    //selectedUser: exampleUser,
-    //selectedUserRepos: exampleUserRepoData,
 }
 export const actionCreators = {
     search: searchAction,
@@ -29,16 +17,16 @@ export const actionCreators = {
 }
 
 export function reducer(state = initialState, action) {
-    if (action.data) {
+    if (action.data || action.data === null) {
         switch (action.type) {
             case search:
-                return assign({ ...state }, { users: action.data });
+                return assign({ ...state }, { users: action.data, selectedUser: null });
 
             case getUser:
-                return assign({ ...state }, { getUser: action.data });
+                return assign({ ...state }, { selectedUser: action.data, selectedUserRepos: [] });
 
             case getUserRepos:
-                return assign({ ...state }, { getUserRepos: action.data });
+                return assign({ ...state }, { selectedUserRepos: action.data });
 
             default:
                 return state;

@@ -18,6 +18,12 @@ const SelectedUser = (props) => {
 
     return (
       <React.Fragment>
+        <input
+          className="button close-flyout-menu"
+          type="button"
+          value="close"
+          onClick={() => props.action()} />
+
         <div>
           <img src={avatar_url} alt={login} />
           <p>
@@ -28,12 +34,11 @@ const SelectedUser = (props) => {
             {followers} followers<br />
             and is following {following} users<br /><br />
 
-            {location}<br />
-            {email}<br />
+            {location}
           </p>
         </div>
 
-        {props.userRepos.length > 0 ? (
+        {props.userRepos && props.userRepos.length > 0 ? (
           <HasUserRepos repos_url={repos_url} userRepos={props.userRepos} />
         ) : (
           <p>This user does not have any user repos... yet!</p>
@@ -48,10 +53,11 @@ const SelectedUser = (props) => {
       <div>
         <h2>Repositories</h2>
         <input
-          class="button"
+          className="button"
           type="submit"
           value="See all repo's in GitHub"
           onClick={() => window.location(props.repos_url)} />
+
         <div>
           {props.userRepos.map((repo, index) => {
             const {
@@ -87,7 +93,13 @@ const SelectedUser = (props) => {
   }
 
   return (
-    props.user ? <HasUser user /> : <React.Fragment />
+    props.user ?
+      <HasUser
+        user={props.user}
+        userRepos={props.userRepos}
+        action={props.action}
+      /> :
+      <React.Fragment />
   );
 }
 

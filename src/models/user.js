@@ -7,7 +7,6 @@ export class UserModel {
         this.name = obj && obj.name ? obj.name : undefined;
         this.company = obj && obj.company ? obj.company : undefined;
         this.location = obj && obj.location ? obj.location : undefined;
-        this.email = obj && obj.email ? obj.email : undefined;
         this.bio = obj && obj.bio ? obj.bio : undefined;
         this.twitter_username = obj && obj.twitter_username ? obj.twitter_username : undefined;
         this.public_repos = obj && obj.public_repos ? obj.public_repos : undefined;
