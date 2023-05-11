@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 export async function get(uri, payload) {
     const payloadAsString = convertPayloadToString(uri, payload);
-    return await axios.get(payload ? uri + payloadAsString : uri)
+    return await axios.get(payloadAsString)
         .then((response) => {
             return response.data;
         })
@@ -14,9 +14,8 @@ export async function get(uri, payload) {
 
 
 function convertPayloadToString(uri, payload) {
-    let updateURI = "" + uri;
     let payloadKey = Object.keys(payload)[0];
-    updateURI.replace("{" + payloadKey + "}", payload[payloadKey])
+    let updateURI = uri.replace("{" + payloadKey + "}", payload[payloadKey])
     return updateURI;
 }
 

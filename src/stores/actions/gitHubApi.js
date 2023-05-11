@@ -13,8 +13,8 @@ export const getUserRepos = "@@team/GET_USER_REPOS";
 
 export const searchAction = (query) => {
     return async (dispatch) => {
-        //let data = await getList(uri.search, {query}, ResultsModel);
-        let data = new ResultsModel(exampleUserResults);
+        let data = await getList(uri.search, {query}, ResultsModel);
+        //let data = new ResultsModel(exampleUserResults);
         if (data && data.items && data.items.length > 0) { 
             data.items = data.items.map((item) => { return new UserResultModel(item); });
         }
@@ -24,19 +24,21 @@ export const searchAction = (query) => {
 
 export const getUserAction = (username) => {
     return async (dispatch) => {
-        //let data = await getList(uri.getUser, {username}, UserModel);
-        let data = username ? new UserModel(exampleUser) : null;
+        let data = username ? await getList(uri.getUser, {username}, UserModel) : null;
+        //let data = username ? new UserModel(exampleUser) : null;
         return dispatch({ type: getUser, data: data });
     }
 }
 
 export const getUserReposAction = (username) => {
     return async (dispatch) => {
-        //let data = await getList(uri.getUserRepos, {username});
-        let data = exampleUserRepoData
+        let data = await getList(uri.getUserRepos, {username});
+        //let data = exampleUserRepoData
         if (data && data.length > 0) { 
             data = data.map((item) => { return new UserRepositoryModel(item); });
         }
+        
+        console.log("data", data)
         return dispatch({ type: getUserRepos, data });
     }
 }
