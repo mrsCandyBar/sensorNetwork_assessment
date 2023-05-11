@@ -34,7 +34,7 @@ const SearchGitHub = (props) => {
             results={props.users}
           />
         </div>
-        <div className={"column is-two-thirds is-maxheight border-left is-absolute p-0 " + (props.selectedUser ? "is-visible" : "is-visually-hidden")}>
+        <div className={"column is-two-thirds is-maxheight border-left is-absolute p-0 background-grey " + (props.selectedUser ? "is-visible" : "is-visually-hidden")}>
           <div className='columns p-0 is-vcentered is-maxheight m-0'>
             <div className='column'>
               <SelectedUser

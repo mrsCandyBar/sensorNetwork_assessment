@@ -56,13 +56,27 @@ html { overflow: hidden;}
   height: 100%;
 }
 
+.border {
+  border: 2px solid #dbdbdb;
+  background-color: white;
+
+  .breakout {
+    margin: -2px !important;
+    padding: 2px !important;
+  }
+  
+  .input {
+    border: none !important;
+  }
+}
+
 .border-right {
-  border-right: 1px solid #dbdbdb;
+  border-right: 1rem solid #dbdbdb;
   background-color: white;
 }
 
 .border-left {
-  border-left: 1px solid #dbdbdb;
+  border-left: 1rem solid #dbdbdb;
   background-color: white;
 }
 
@@ -124,11 +138,28 @@ html { overflow: hidden;}
   text-align: center;
   max-width: 300px;
   margin: 0 auto;
+  position: relative;
 
   & img {
     border-radius: 100% !important;
     width: 100% !important;
     margin-bottom: 3rem;
+    border: 2px solid rgb(214, 214, 214);
+    background-color: white;
+  }
+
+  .title {
+    text-align: left;
+    background: white;
+    display: block;
+    z-index: 10;
+    position: absolute;
+    margin-top: -85px;
+    border: 2px solid grey;
+  }
+
+  big.title {
+    margin-top: -125px !important;
   }
 }
 
@@ -136,4 +167,20 @@ html { overflow: hidden;}
   border: 3px solid #dbdbdb;
   border-radius: 5px;
   background-color: white ;
+  position: relative;
+  margin-top: 2rem;
+}
+
+.icon-holder {
+  position: absolute;
+  top: -17px;
+  right: 10px;
+  background: grey;
+  border: 2px solid;
+  padding: 5px 10px;
+  color: white
+}
+
+.background-grey {
+  background-color: #dbdbdb;
 }

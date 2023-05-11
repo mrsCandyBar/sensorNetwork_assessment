@@ -25,16 +25,18 @@ const SelectedUser = (props) => {
           onClick={() => props.action()} />
 
         <div className='columns is-vcentered'>
-          <div className='column '>
+          <div className='column'>
             <div className='user-result'>
               <img src={avatar_url} alt={login} />
               <p>
-                <big>{login}</big><br />
-                <a href={html_url}>{name}</a><br />
-                {bio}<br /><br />
+                <big className='title pt-2 pb-2 pl-3 pr-3'>
+                  {login}<br />
+                  <small><a href={html_url}>{name}</a></small>
+                </big>
 
-                {followers} followers and is following {following} users<br /><br />
+                <big>{bio}</big><br /><br />
 
+                {followers} followers and is following {following} users<br />
                 {location}
               </p>
             </div>
@@ -65,7 +67,7 @@ const SelectedUser = (props) => {
           value="See all repo's in GitHub"
           onClick={() => window.location(props.repos_url)} />
 
-        <div>
+        <div className='mb-5'>
           {props.userRepos.map((repo, index) => {
             const {
               html_url,
@@ -79,20 +81,26 @@ const SelectedUser = (props) => {
             } = repo;
 
             return (
-              <div key={index} className='repo-entry p-3 mr-5 mt-5'>
-                <p>
-                  <a href={html_url} target="_blank" rel="noopener noreferrer">
-                    {name}
-                    <small> created : {created_at}</small>
-                  </a><br />
-                  {description}<br /><br />
-                  <small>
-                    {updated_at && (<>updated : {updated_at}<br /></>)}
+              <div key={index} className='repo-entry p-5 mr-5'>
+                {(forks_count || open_issues_count || watchers) && (
+                  <div className='icon-holder'>
                     {forks_count && (<>fork count : {forks_count}<br /></>)}
                     {open_issues_count && (<>open issues : {open_issues_count}<br /></>)}
                     {watchers && (<>watchers : {watchers}</>)}
-                  </small>
-                </p>
+                  </div>
+                )}
+
+                <div className="columns mb-0">
+                  <div className="column">
+                    <p>
+                      <a className='title is-5' href={html_url} target="_blank" rel="noopener noreferrer">{name}</a>
+                    </p>
+                  </div>
+                  <div className="column">
+                    <small>started: {created_at}</small>
+                  </div>
+                </div>
+                <p>{description}</p>
               </div>
             )
           })}

@@ -14,18 +14,13 @@ const Results = (props) => {
             } = user;
 
             return (
-              <div key={index} className={"column mb-5 " + (windowWidth > 1300 ? "is-one-quarter" : "is-one-third")}>
-                <div className='user-result p-3'>
+              <div key={index} className={"column mb-3 " + (windowWidth > 1300 ? "is-one-quarter" : "is-one-third")}>
+                <div 
+                  className='user-result p-3'
+                  onClick={() => props.action(login)}
+                >
                   <img className='mb-0' src={avatar_url} alt={login} />
-                  <p>
-                    <big>{login}</big><br />
-                    <input
-                      className="button"
-                      type="button"
-                      value="More Info"
-                      onClick={() => props.action(login)}
-                    />
-                  </p>
+                  <p className='title is-4 pt-2 pb-2 pl-3 pr-3'>{login}</p>
                 </div>
               </div>
             )
