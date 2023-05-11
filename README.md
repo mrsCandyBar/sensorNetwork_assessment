@@ -6,6 +6,7 @@ Assessment to create a search for github users by name.
 
 In the project directory, you can run:
 
+### `npm run css-build`
 ### `npm start`
 ### `npm test`
 ### `npm run build`
