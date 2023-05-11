@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { Col, Row, Form, Button } from 'reactstrap';
-import FormInput from '../../../components/form/input';
-
 
 const Search = (props) => {
   const [username, setUsername] = useState('');
@@ -15,25 +12,22 @@ const Search = (props) => {
       <h1>Search GitHub for a user</h1>
       <p>Note: this search checks the GitHub user's actual name and their usernames.</p>
 
-      <Form onSubmit={submitAction}>
-        <Row className='form-row'>
-          <Col md={6}>
-            <FormInput
+      <form onSubmit={submitAction}>
+        <div>
+          <div md={6}>
+            <input 
               id='username'
-              type='text'
               name='username'
-              placeholder='Search by name here...'
-              label="Username / Github User's Name"
-              value={username}
-              onChange={(input) => setUsername(input.target.value)}
-              required
-            />
-          </Col>
-          <Col>
-            <Button onClick={submitAction}>Search</Button>
-          </Col>
-        </Row>
-      </Form>
+              class="input" 
+              type="text" 
+              placeholder="Username / Github User's Name"
+              onChange={(input) => setUsername(input.target.value)} />
+          </div>
+          <div>
+            <input class="button" type="submit" value="Search" onClick={submitAction} />
+          </div>
+        </div>
+      </form>
     </React.Fragment>
   );
 }
