@@ -28,3 +28,4 @@ Candy Bar
 
 # Time worked on task and rough estimate of what was done
 10/05/2023: 2:34pm GMT+2 - 3:57pm GMT+2  (project setup, pulling API data and modelling data for implementation)
+11/05/2023: 8:54am GMT+2  (start: Adding templating)
