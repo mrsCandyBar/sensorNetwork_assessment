@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const SelectedUser = (props) => {
 
@@ -18,23 +18,36 @@ const SelectedUser = (props) => {
 
     return (
       <React.Fragment>
-        <input
-          className="button close-flyout-menu"
-          type="button"
-          value="close"
-          onClick={() => props.action()} />
+        <a className="title button close-flyout-menu is-black mt-5"
+          onClick={() => props.action()}>
+          <i className="gg-close" />
+        </a>
 
         <div className='columns is-vcentered'>
           <div className='column'>
             <div className='user-result'>
               <img src={avatar_url} alt={login} />
               <p>
-                <big className='title pt-2 pb-2 pl-3 pr-3'>
-                  {login}<br />
-                  <small><a href={html_url}>{name}</a></small>
-                </big>
+                {login && (
+                  <a href={html_url}>
+                    <big className='title button is-black is-large'>
+                      {login}
+                      {name && (
+                        <>
+                          <br />
+                          <small>{name}</small>
+                        </>
+                      )}
+                    </big>
+                  </a>
+                )}
 
-                <big>{bio}</big><br /><br />
+
+                {bio && (
+                  <>
+                    <big className='title'>{bio}</big><br /><br />
+                  </>
+                )}
 
                 {followers} followers and is following {following} users<br />
                 {location}
@@ -58,11 +71,22 @@ const SelectedUser = (props) => {
   }
 
   function HasUserRepos(props) {
+    const [count, setRepoPage] = useState(0);
+
+    function updateCount(increase) {
+      if (increase) {
+        setRepoPage(count + 1);
+        props.action(props.user.login, count)
+      } else {
+        setRepoPage(count - 1);
+        props.action(props.user.login, count)
+      }
+    }
+
     return (
       <div>
-        <h2 className='mt-5'>Repositories</h2>
         <input
-          className="button"
+          className="button is-black mt-5 mb-5"
           type="submit"
           value="See all repo's in GitHub"
           onClick={() => window.location(props.repos_url)} />
@@ -104,7 +128,25 @@ const SelectedUser = (props) => {
               </div>
             )
           })}
+
+          {count !== 0 && (
+            <input
+              className="button is-black mt-5 mb-5 mr-3"
+              type="submit"
+              value="<<< Prev"
+              onClick={() => updateCount()} />
+          )}
+
+          {count !== ((props.userRepos.length - 1) / 2) && (
+            <input
+              className="button is-black mt-5 mb-5"
+              type="submit"
+              value="Next >>>"
+              onClick={() => updateCount(true)} />
+          )}
+
         </div>
+
       </div>
     )
   }

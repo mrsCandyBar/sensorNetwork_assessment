@@ -16,10 +16,10 @@ const Search = (props) => {
           </svg>
         </div>
         <div className='column'>
-          <h1 className="title">Search <br/>GitHub</h1>
+          <h1 className="title">Search <br />GitHub</h1>
         </div>
       </div>
-      
+
       <p className="subtitle">Use the search input below to query GitHub Api to return users by their names and usernames.</p>
 
       <form className="columns is-gapless border" onSubmit={submitAction}>
@@ -35,13 +35,29 @@ const Search = (props) => {
 
         <div className="column breakout">
           <input
-            className="button is-fullwidth is-maxheight"
+            className="button is-fullwidth is-maxheight is-black"
             type="submit"
             value="Go!"
           />
         </div>
       </form>
+
+      {props.noMoreAttemptsLeft && (
+        <React.Fragment>
+          <p>I see you have exhausted all your attempts to use the API, don't worry hunny I gotchu.
+            Press this button and I'll give you some test scenarios to play with.
+          </p>
+
+          <input
+            className="button is-fullwidth is-maxheight is-black"
+            type="submit"
+            value="Gimme da test data!"
+          />
+        </React.Fragment>
+      )}
+
     </React.Fragment>
+
   );
 }
 

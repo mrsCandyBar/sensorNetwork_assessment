@@ -14,8 +14,13 @@ export async function get(uri, payload) {
 
 
 function convertPayloadToString(uri, payload) {
-    let payloadKey = Object.keys(payload)[0];
-    let updateURI = uri.replace("{" + payloadKey + "}", payload[payloadKey])
+    let updateURI = uri;
+    Object.keys(payload).map((key) => {
+        let payloadKey = key;
+        updateURI = updateURI.replace("{" + payloadKey + "}", payload[payloadKey]);
+    });
+
+    console.log("updateURI >>>", updateURI, payload)
     return updateURI;
 }
 

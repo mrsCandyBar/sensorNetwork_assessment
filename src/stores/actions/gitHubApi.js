@@ -1,44 +1,52 @@
 import { getList } from './_commonEvents';
 import { ResultsModel, UserResultModel, UserModel, UserRepositoryModel } from '../../models';
 import { uri } from '../../utilities/endpoints';
-import { 
-    exampleUser, 
-    exampleUserRepoData, 
-    exampleUserResults 
+import {
+    astaxie, astaxie_repos,
+    mrsCandyBar, mrsCandyBar_repos,
+    test502git, test502git_repos,
+    testdrivenio, testdrivenio_repos,
+    test_results, candice_results
 } from './exampleData';
 
 export const search = "@@team/SEARCH";
 export const getUser = "@@team/GET_USER";
 export const getUserRepos = "@@team/GET_USER_REPOS";
 
-export const searchAction = (query) => {
+export const searchAction = (query, count) => {
     return async (dispatch) => {
-        let data = await getList(uri.search, {query}, ResultsModel);
-        //let data = new ResultsModel(exampleUserResults);
-        if (data && data.items && data.items.length > 0) { 
-            data.items = data.items.map((item) => { return new UserResultModel(item); });
+
+        let data = (query !== "demo") ?
+            await getList(uri.search, { query, pageCount: count }, ResultsModel) :
+            new ResultsModel(candice_results)
+
+        if (data && data.users && data.users.length > 0) {
+            data.users = data.users.map((item) => { return new UserResultModel(item); });
         }
+        console.log("data ? ", data)
         return dispatch({ type: search, data });
     }
 }
 
-export const getUserAction = (username) => {
+export const getUserAction = (username, demo) => {
     return async (dispatch) => {
-        let data = username ? await getList(uri.getUser, {username}, UserModel) : null;
-        //let data = username ? new UserModel(exampleUser) : null;
+        let data =
+            demo ?
+                (username ? new UserModel(mrsCandyBar) : null) :
+                username ? await getList(uri.getUser, { username }, UserModel) : null;
+        console.log("data >>> check for failed requests", data)
         return dispatch({ type: getUser, data: data });
     }
 }
 
-export const getUserReposAction = (username) => {
+export const getUserReposAction = (username, count, demo) => {
     return async (dispatch) => {
-        let data = await getList(uri.getUserRepos, {username});
-        //let data = exampleUserRepoData
-        if (data && data.length > 0) { 
+        let data = demo ? mrsCandyBar_repos : await getList(uri.getUserRepos, { username, pageCount: count });
+        if (data && data.length > 0) {
             data = data.map((item) => { return new UserRepositoryModel(item); });
         }
-        
-        console.log("data", data)
+
+        console.log("data repos >>> check for failed requests", data)
         return dispatch({ type: getUserRepos, data });
     }
 }

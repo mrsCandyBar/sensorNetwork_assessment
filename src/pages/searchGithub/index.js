@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../../stores/reducers/gitHubApi';
@@ -8,13 +8,17 @@ import SelectedUser from './SelectedUser';
 
 const SearchGitHub = (props) => {
 
-  const submitQuery = (username) => {
-    props.search(username);
+  const [searchname, setSearchname] = useState("");
+  const submitQuery = (username, count) => {
+    props.search(username ? username : searchname, count ? count : 0);
+    if (username) {
+      setSearchname(username);
+    }
   }
 
-  const selectUser = async (username) => {
+  const selectUser = async (username, count) => {
     await props.getUser(username);
-    username && await props.getUserRepos(username);
+    username && await props.getUserRepos(username, count ? count : 0);
   }
 
   return (
@@ -23,14 +27,20 @@ const SearchGitHub = (props) => {
         <div className="column is-one-third is-maxheight border-right">
           <div className='columns p-5 is-vcentered is-maxheight m-0'>
             <div className='column'>
-              <Search action={(username) => submitQuery(username)} />
+              <Search
+                action={(username) => submitQuery(username)}
+                noMoreAttemptsLeft={props.noMoreAttemptsLeft}
+              />
             </div>
           </div>
         </div>
 
         <div className="column pt-0 pb-0 pl-5 pr-0 is-two-thirds">
           <Results
-            action={(username) => selectUser(username)}
+            actions={{
+              selectUser: (username) => selectUser(username),
+              updateUserResults: (count) => submitQuery(null, count)
+            }}
             results={props.users}
           />
         </div>
