@@ -22,29 +22,27 @@ const Pagination = (props) => {
             }
         }
 
-        console.log("click!", updateCount)
         updateCountProp(updateCount);
         updateResultsAction(updateCount)
     }
 
-    console.log("init!")
     const maxResultCount = Math.floor(paginationCount / maxResults);
     const maxResultCountUnder10 = maxResultCount > 10 ? 10 : maxResultCount;
     const maxResultCountUnderOnward = count + 5 > maxResultCount ? maxResultCount : count + 5;
     return (
         <>
-            {count > 0 && (
+            {count > 1 && (
                 <input
                     className="button is-black mt-5 mb-5 mr-3"
                     type="submit"
-                    value="<<< Prev"
+                    value="Prev"
                     onClick={() => updateCount()}
                 />
             )}
 
             {(count < 5) ? (
                 [...Array(maxResultCountUnder10)].map((x, i) =>
-                (<input
+                (i > 0) && (<input
                     className="button is-black mt-5 mb-5 ml-1 mr-1"
                     type="submit"
                     value={i}
@@ -54,7 +52,7 @@ const Pagination = (props) => {
             ) : (
                 <>
                     {[...Array(maxResultCountUnderOnward)].map((x, i) =>
-                    (<input
+                    (i > (count - 5)) && (<input
                         className="button is-black mt-5 mb-5 ml-1 mr-1"
                         type="submit"
                         value={i}
@@ -69,7 +67,7 @@ const Pagination = (props) => {
                 <input
                     className="button is-black mt-5 mb-5 ml-3"
                     type="submit"
-                    value="Next >>>"
+                    value="Next"
                     onClick={() => updateCount(true)}
                 />
             )}

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Pagination from '../../../components/pagination';
 
 const SelectedUser = (props) => {
+  const [count, setRepoPage] = useState(0);
 
-  console.log("props >>>> user >>>>", props)
   function HasUser(props) {
     const {
       avatar_url,
@@ -14,7 +14,6 @@ const SelectedUser = (props) => {
       followers,
       following,
       location,
-      email,
       repos_url, 
       public_repos
     } = props.user;
@@ -61,7 +60,12 @@ const SelectedUser = (props) => {
           <div className='column pr-0'>
             <div className='cap-height'>
               {props.userRepos && props.userRepos.length > 0 ? (
-                <HasUserRepos repos_url={repos_url} userRepos={props.userRepos}  public_repos={public_repos} updateRepoResults={props.actions.updateRepoResults}/>
+                <HasUserRepos 
+                  count={count}
+                  repos_url={repos_url} 
+                  userRepos={props.userRepos}  
+                  public_repos={public_repos} 
+                  updateRepoResults={props.actions.updateRepoResults}/>
               ) : (
                 <p>This user does not have any user repos... yet!</p>
               )}
@@ -74,8 +78,6 @@ const SelectedUser = (props) => {
   }
 
   function HasUserRepos(props) {
-    const [count, setRepoPage] = useState(0);
-    console.log("props >>>", props)
 
     return (
       <div>
@@ -92,7 +94,6 @@ const SelectedUser = (props) => {
               name,
               description,
               created_at,
-              updated_at,
               forks_count,
               open_issues_count,
               watchers
@@ -126,7 +127,7 @@ const SelectedUser = (props) => {
           {props.public_repos && (
             <Pagination
               paginationCount={props.public_repos}
-              count={count}
+              count={props.count}
               maxResults={2}
               updateCountProp={(count) => setRepoPage(count)}
               updateResultsAction={(count) => props.updateRepoResults(count)}
