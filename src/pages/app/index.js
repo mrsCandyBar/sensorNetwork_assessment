@@ -3,6 +3,7 @@ import SearchGitHub from '../searchGithub';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators as GitHubActions } from '../../stores/reducers/gitHubApi';
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Route index element={<SearchGitHub/>} />
         <Route exact path='/search' element={<SearchGitHub/>} />
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

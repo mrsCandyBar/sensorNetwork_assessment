@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import Pagination from '../../../components/pagination';
 
 const SelectedUser = (props) => {
 
+  console.log("props >>>> user >>>>", props)
   function HasUser(props) {
     const {
       avatar_url,
@@ -13,13 +15,14 @@ const SelectedUser = (props) => {
       following,
       location,
       email,
-      repos_url
+      repos_url, 
+      public_repos
     } = props.user;
 
     return (
       <React.Fragment>
         <a className="title button close-flyout-menu is-black mt-5"
-          onClick={() => props.action()}>
+          onClick={() => props.actions.selectUser()}>
           <i className="gg-close" />
         </a>
 
@@ -58,7 +61,7 @@ const SelectedUser = (props) => {
           <div className='column pr-0'>
             <div className='cap-height'>
               {props.userRepos && props.userRepos.length > 0 ? (
-                <HasUserRepos repos_url={repos_url} userRepos={props.userRepos} />
+                <HasUserRepos repos_url={repos_url} userRepos={props.userRepos}  public_repos={public_repos} updateRepoResults={props.actions.updateRepoResults}/>
               ) : (
                 <p>This user does not have any user repos... yet!</p>
               )}
@@ -72,16 +75,7 @@ const SelectedUser = (props) => {
 
   function HasUserRepos(props) {
     const [count, setRepoPage] = useState(0);
-
-    function updateCount(increase) {
-      if (increase) {
-        setRepoPage(count + 1);
-        props.action(props.user.login, count)
-      } else {
-        setRepoPage(count - 1);
-        props.action(props.user.login, count)
-      }
-    }
+    console.log("props >>>", props)
 
     return (
       <div>
@@ -129,20 +123,14 @@ const SelectedUser = (props) => {
             )
           })}
 
-          {count !== 0 && (
-            <input
-              className="button is-black mt-5 mb-5 mr-3"
-              type="submit"
-              value="<<< Prev"
-              onClick={() => updateCount()} />
-          )}
-
-          {count !== ((props.userRepos.length - 1) / 2) && (
-            <input
-              className="button is-black mt-5 mb-5"
-              type="submit"
-              value="Next >>>"
-              onClick={() => updateCount(true)} />
+          {props.public_repos && (
+            <Pagination
+              paginationCount={props.public_repos}
+              count={count}
+              maxResults={2}
+              updateCountProp={(count) => setRepoPage(count)}
+              updateResultsAction={(count) => props.updateRepoResults(count)}
+            />
           )}
 
         </div>
@@ -156,7 +144,7 @@ const SelectedUser = (props) => {
       <HasUser
         user={props.user}
         userRepos={props.userRepos}
-        action={props.action}
+        actions={props.actions}
       /> : (
         <React.Fragment>
           <p>No userdata here ....</p>

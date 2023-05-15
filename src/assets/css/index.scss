@@ -76,7 +76,7 @@ html { overflow: hidden;}
 }
 
 .border-left {
-  border-left: 1rem solid #dbdbdb;
+  border-left: 1rem solid white;
   background-color: white;
 }
 
@@ -124,7 +124,7 @@ html { overflow: hidden;}
 .close-flyout-menu {
   position: fixed;
   top: 0px;
-  margin-left: calc(-3em - 60px);
+  margin-left: calc(-2.45em - 60px);
 }
 
 .cap-height {
@@ -144,22 +144,22 @@ html { overflow: hidden;}
     border-radius: 100% !important;
     width: 100% !important;
     margin-bottom: 3rem;
-    border: 2px solid rgb(214, 214, 214);
+    border: 1.1rem solid #d6d6d6;
     background-color: white;
   }
 
-  .title {
+  .title.button {
     text-align: left;
-    background: white;
     display: block;
     z-index: 10;
     position: absolute;
     margin-top: -85px;
-    border: 2px solid grey;
+    height: auto;
   }
 
-  big.title {
+  big.title.button {
     margin-top: -125px !important;
+    
   }
 }
 
@@ -193,4 +193,33 @@ html { overflow: hidden;}
   top: 0px;
   right: 0px;
   opacity: 0.3;
+}
+
+
+.gg-close {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs,1));
+  width: 42px;
+  height: 28px;
+  border: 4px solid transparent;
+  border-radius: 40px
+}
+.gg-close::after,
+.gg-close::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 32px;
+  height: 4px;
+  background: currentColor;
+  transform: rotate(45deg);
+  border-radius: 5px;
+  top: 8px;
+  left: 1px
+}
+.gg-close::after {
+  transform: rotate(-45deg)
 }

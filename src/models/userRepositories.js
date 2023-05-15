@@ -10,5 +10,6 @@ export class UserRepositoryModel {
         this.forks_count = obj && obj.forks_count ? obj.forks_count : undefined;
         this.open_issues_count = obj && obj.open_issues_count ? obj.open_issues_count : undefined;
         this.watchers = obj && obj.watchers ? obj.watchers : undefined;
+        this.visibility = obj && obj.visibility ? obj.visibility : undefined;
     }
 }

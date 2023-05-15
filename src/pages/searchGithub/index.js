@@ -9,6 +9,8 @@ import SelectedUser from './SelectedUser';
 const SearchGitHub = (props) => {
 
   const [searchname, setSearchname] = useState("");
+  const [selectedUser, setSelectedUser] = useState("");
+
   const submitQuery = (username, count) => {
     props.search(username ? username : searchname, count ? count : 0);
     if (username) {
@@ -19,6 +21,11 @@ const SearchGitHub = (props) => {
   const selectUser = async (username, count) => {
     await props.getUser(username);
     username && await props.getUserRepos(username, count ? count : 0);
+    setSelectedUser(username);
+  }
+
+  const selectUserRepos = async (count) => {
+    await props.getUserRepos(selectedUser, count ? count : 0);
   }
 
   return (
@@ -53,7 +60,10 @@ const SearchGitHub = (props) => {
                   style={{ backgroundImage: "url(" + props.selectedUser.avatar_url + ")" }} />
               )}
               <SelectedUser
-                action={() => selectUser()}
+                actions={{
+                  selectUser: (username) => selectUser(username),
+                  updateRepoResults: (count) => selectUserRepos(count)
+                }}
                 user={props.selectedUser}
                 userRepos={props.selectedUserRepos}
               />
