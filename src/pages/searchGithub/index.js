@@ -5,14 +5,22 @@ import { actionCreators } from '../../stores/reducers/gitHubApi';
 import Search from './Search';
 import Results from './Results';
 import SelectedUser from './SelectedUser';
+import Layout from '../../components/layout';
 
 const SearchGitHub = (props) => {
 
+  const resultsPerPull = 15;
+  const repoResultsPerPull = 5
   const [searchname, setSearchname] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
 
   const submitQuery = (username, count) => {
-    props.search(username ? username : searchname, count ? count : 0);
+    props.search(
+      username ? username : searchname,
+      resultsPerPull,
+      count ? count : 0
+    );
+
     if (username) {
       setSearchname(username);
     }
@@ -20,59 +28,62 @@ const SearchGitHub = (props) => {
 
   const selectUser = async (username, count) => {
     await props.getUser(username);
-    username && await props.getUserRepos(username, count ? count : 0);
+    username && await props.getUserRepos(
+      username,
+      repoResultsPerPull,
+      count ? count : 0
+    );
     setSelectedUser(username);
   }
 
   const selectUserRepos = async (count) => {
-    await props.getUserRepos(selectedUser, count ? count : 0);
+    await props.getUserRepos(
+      selectedUser,
+      repoResultsPerPull,
+      count ? count : 0
+    );
   }
 
   return (
-    <React.Fragment>
-      <div className="columns is-fullheight is-vcentered p-0 m-0">
-        <div className="column is-one-third is-maxheight border-right">
-          <div className='columns p-5 is-vcentered is-maxheight m-0'>
-            <div className='column'>
-              <Search
-                action={(username) => submitQuery(username)}
-                noMoreAttemptsLeft={props.noMoreAttemptsLeft}
-              />
-            </div>
-          </div>
-        </div>
+    <Layout
+      mainSidebar={(
+        <Search
+          action={(username) => submitQuery(username)}
+          noMoreAttemptsLeft={props.noMoreAttemptsLeft}
+        />
+      )}
 
-        <div className="column pt-0 pb-0 pl-5 pr-0 is-two-thirds">
-          <Results
+      mainContainer={(
+        <Results
+          actions={{
+            selectUser: (username) => selectUser(username),
+            updateUserResults: (count) => submitQuery(null, count)
+          }}
+          resultsPerPull={resultsPerPull}
+          results={props.users}
+        />
+      )}
+      
+      selectedContentToggle={props.selectedUser}
+      selectedContent={(
+        <>
+          {props.selectedUser && (
+            <div
+              className='is-maxheight is-fullwidth background-grey'
+              style={{ backgroundImage: "url(" + props.selectedUser.avatar_url + ")" }} />
+          )}
+          <SelectedUser
             actions={{
               selectUser: (username) => selectUser(username),
-              updateUserResults: (count) => submitQuery(null, count)
+              updateRepoResults: (count) => selectUserRepos(count)
             }}
-            results={props.users}
+            repoResultsPerPull={repoResultsPerPull}
+            user={props.selectedUser}
+            userRepos={props.selectedUserRepos}
           />
-        </div>
-        <div className={"column is-two-thirds is-maxheight border-left is-absolute p-0 " + (props.selectedUser ? "is-visible" : "is-visually-hidden")} >
-          <div className='columns p-0 is-vcentered is-maxheight m-0'>
-            <div className='column'>
-              {props.selectedUser && (
-                <div
-                  className='is-maxheight is-fullwidth background-grey'
-                  style={{ backgroundImage: "url(" + props.selectedUser.avatar_url + ")" }} />
-              )}
-              <SelectedUser
-                actions={{
-                  selectUser: (username) => selectUser(username),
-                  updateRepoResults: (count) => selectUserRepos(count)
-                }}
-                user={props.selectedUser}
-                userRepos={props.selectedUserRepos}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </React.Fragment>
+        </>
+      )}
+    />
   );
 }
 

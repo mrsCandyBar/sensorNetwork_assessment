@@ -4,7 +4,7 @@ const root = "https://api.github.com/";
 
 export const uri = {
     // Search, get users and get user repos
-    search: root + 'search/users?q={query}&per_page=15&page={pageCount}',
+    search: root + 'search/users?q={query}&per_page={resultsPerPage}&page={pageCount}',
     getUser: root + 'users/{username}',
-    getUserRepos: root + 'users/{username}/repos?per_page=2&page={pageCount}'
+    getUserRepos: root + 'users/{username}/repos?per_page={resultsPerPage}&page={pageCount}'
 }

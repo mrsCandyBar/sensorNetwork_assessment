@@ -13,11 +13,11 @@ export const search = "@@team/SEARCH";
 export const getUser = "@@team/GET_USER";
 export const getUserRepos = "@@team/GET_USER_REPOS";
 
-export const searchAction = (query, count) => {
+export const searchAction = (query, resultsPerPage, pageCount) => {
     return async (dispatch) => {
 
         let data = (query !== "demo") ?
-            await getList(uri.search, { query, pageCount: count }, ResultsModel) :
+            await getList(uri.search, { query, resultsPerPage, pageCount }, ResultsModel) :
             new ResultsModel(candice_results)
 
         if (data && data.users && data.users.length > 0) {
@@ -39,9 +39,9 @@ export const getUserAction = (username, demo) => {
     }
 }
 
-export const getUserReposAction = (username, count, demo) => {
+export const getUserReposAction = (username, resultsPerPage, pageCount, demo) => {
     return async (dispatch) => {
-        let data = demo ? mrsCandyBar_repos : await getList(uri.getUserRepos, { username, pageCount: count });
+        let data = demo ? mrsCandyBar_repos : await getList(uri.getUserRepos, { username, resultsPerPage, pageCount });
         if (data && data.length > 0) {
             data = data.map((item) => { return new UserRepositoryModel(item); });
         }
