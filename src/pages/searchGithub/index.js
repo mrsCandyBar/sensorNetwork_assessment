@@ -63,13 +63,13 @@ const SearchGitHub = (props) => {
           results={props.users}
         />
       )}
-      
+
       selectedContentToggle={props.selectedUser}
       selectedContent={(
         <>
           {props.selectedUser && (
             <div
-              className='is-maxheight is-fullwidth background-grey'
+              className='is-maxheight is-fullwidth theme_background'
               style={{ backgroundImage: "url(" + props.selectedUser.avatar_url + ")" }} />
           )}
           <SelectedUser

@@ -12,7 +12,7 @@ const SelectedUser = (props) => {
       user,
       actions
     } = props;
-    
+
     const {
       repos_url,
       public_repos
@@ -22,7 +22,7 @@ const SelectedUser = (props) => {
       <React.Fragment>
         <a className="title button close-flyout-menu is-black mt-5"
           onClick={() => actions.selectUser()}>
-          <i className="gg-close" />
+          <i className="theme_close-button" />
         </a>
 
         <div className='columns is-vcentered'>

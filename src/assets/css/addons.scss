@@ -1,0 +1,97 @@
+@charset "utf-8";
+
+// Custom Styling
+// This is to accomodate things that are not in Bulma
+/////////////////////////////////////////////////////
+
+html { overflow: hidden;}
+
+.is-fullheight {
+  height: 100vh;
+}
+
+@media all and (max-width: 768px) {
+  .is-fullheight {
+    height: auto;
+  }
+}
+
+.is-maxheight {
+  height: 100%;
+}
+
+.border {
+  border: 2px solid #dbdbdb;
+  background-color: white;
+
+  .breakout {
+    margin: -2px !important;
+    padding: 2px !important;
+  }
+  
+  .input {
+    border: none !important;
+  }
+}
+
+.border-right {
+  border-right: 1rem solid #dbdbdb;
+  background-color: white;
+}
+
+.border-left {
+  border-left: 1rem solid white;
+  background-color: white;
+}
+
+@media all and (max-width: 1128px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media all and (max-width: 768px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@keyframes flyout-modal {
+  0% { right: -66.66%; }
+  100% { right: 0%; }
+}
+
+@keyframes flyout-modal-back {
+  0% { right: 0%; }
+  100% { right: -66.66%; }
+}
+
+.is-absolute {
+  position: absolute;
+  z-index: 10;
+
+  &.is-visible {
+    animation-name: flyout-modal;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    right: -66.66%;
+  }
+
+  &.is-visually-hidden {
+    animation-name: flyout-modal-back;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    right: 0%;
+  }
+}
+
+.close-flyout-menu {
+  position: fixed;
+  top: 0px;
+  margin-left: calc(-2.45em - 60px);
+}
+
+.cap-height {
+  max-height: 100vh;
+  overflow-y: auto;
+}

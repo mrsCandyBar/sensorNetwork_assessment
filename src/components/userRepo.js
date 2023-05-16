@@ -12,9 +12,9 @@ const UserRepo = (props) => {
     } = props.repo;
 
     return (
-        <div className='repo-entry p-5 mr-5'>
+        <div className='theme_repo-entry p-5 mr-5'>
             {(forks_count || open_issues_count || watchers) && (
-                <div className='icon-holder'>
+                <div className='theme_icon-holder'>
                     {forks_count && (<>fork count : {forks_count}<br /></>)}
                     {open_issues_count && (<>open issues : {open_issues_count}<br /></>)}
                     {watchers && (<>watchers : {watchers}</>)}

@@ -13,7 +13,7 @@ const SelectedUserBio = (props) => {
     } = props.user;
 
     return (
-        <div className='user-result'>
+        <div className='theme_user-result'>
             <img src={avatar_url} alt={login} />
             <p>
                 {login && (

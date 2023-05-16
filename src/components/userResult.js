@@ -5,7 +5,7 @@ const UserResult = (props) => {
 
     return (
         <div
-            className='user-result p-3'
+            className='theme_user-result p-3'
             onClick={() => selectUser(login)}
         >
             <img className='mb-0' src={avatar_url} alt={login} />
