@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserIcon, ClipboardDocumentIcon, ShareIcon } from '@heroicons/react/20/solid';
 
 const UserRepo = (props) => {
     const {
@@ -12,12 +13,12 @@ const UserRepo = (props) => {
     } = props.repo;
 
     return (
-        <div className='theme_repo-entry p-5 mr-5'>
+        <div className='theme_repo-entry p-5'>
             {(forks_count || open_issues_count || watchers) && (
                 <div className='theme_icon-holder'>
-                    {forks_count && (<>fork count : {forks_count}<br /></>)}
-                    {open_issues_count && (<>open issues : {open_issues_count}<br /></>)}
-                    {watchers && (<>watchers : {watchers}</>)}
+                    {forks_count && (<>&nbsp;<ShareIcon style={{ width: "20px", height: "20px", verticalAlign: "sub"}} /> {forks_count}&nbsp;</>)}
+                    {open_issues_count && (<>&nbsp;<ClipboardDocumentIcon style={{ width: "20px", height: "20px", verticalAlign: "sub"}} /> {open_issues_count}&nbsp;</>)}
+                    {watchers && (<>&nbsp;<UserIcon style={{ width: "20px", height: "20px", verticalAlign: "sub"}} /> {watchers}&nbsp;</>)}
                 </div>
             )}
 
@@ -28,7 +29,8 @@ const UserRepo = (props) => {
                             className='title is-5'
                             href={html_url}
                             target="_blank"
-                            rel="noopener noreferrer">{name}</a>
+                            rel="noopener noreferrer"
+                            >{name}</a>
                     </p>
                 </div>
                 <div className="column">

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Pagination from '../../../components/pagination';
 import UserRepo from '../../../components/userRepo';
 import SelectedUserBio from '../../../components/userBio';
+import { ArrowLeftIcon } from '@heroicons/react/20/solid';
+
 
 const SelectedUser = (props) => {
-  const [count, setRepoPage] = useState(0);
+  const [count, setRepoPage] = useState(1);
 
   function HasUser(props) {
     const {
@@ -20,10 +22,10 @@ const SelectedUser = (props) => {
 
     return (
       <React.Fragment>
-        <a className="title button close-flyout-menu is-black mt-5"
+        <button className="title close-flyout-menu"
           onClick={() => actions.selectUser()}>
-          <i className="theme_close-button" />
-        </a>
+            <span><ArrowLeftIcon style={{ width: "20px", height: "20px" }} /> Return to results</span>
+        </button>
 
         <div className='columns is-vcentered'>
           <div className='column'>
@@ -34,23 +36,27 @@ const SelectedUser = (props) => {
 
           <div className='column pr-0'>
             <div className='cap-height'>
-              {(props.userRepos && props.userRepos.length > 0) ? (
-                <HasUserRepos
-                  repos_url={repos_url}
-                  userRepos={props.userRepos} />
-              ) : (
-                <p>This user does not have any user repos... yet!</p>
-              )}
+              <div className='m-5 '>
+                {(props.userRepos && props.userRepos.length > 0) ? (
+                  <HasUserRepos
+                    login={user.login}
+                    repos_url={repos_url}
+                    userRepos={props.userRepos} />
+                ) : (
+                  <p>This user does not have any user repos... yet!</p>
+                )}
 
-              {public_repos && (
-                <Pagination
-                  paginationCount={public_repos}
-                  count={count}
-                  maxResults={repoResultsPerPull || 5}
-                  updateCountProp={(count) => setRepoPage(count)}
-                  updateResultsAction={(count) => actions.updateRepoResults(count)}
-                />
-              )}
+                {public_repos && (
+                  <Pagination
+                    paginationCount={public_repos}
+                    count={count}
+                    maxResults={repoResultsPerPull || 5}
+                    paginationOptions={4}
+                    updateCountProp={(count) => setRepoPage(count)}
+                    updateResultsAction={(count) => actions.updateRepoResults(count)}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -62,11 +68,13 @@ const SelectedUser = (props) => {
   function HasUserRepos(props) {
     return (
       <div>
-        <input
+        <a
           className="button is-black mt-5 mb-5"
-          type="submit"
-          value="See all repo's in GitHub"
-          onClick={() => window.location(props.repos_url)} />
+          href={"https://github.com/" + props.login + "?tab=repositories"}
+          target="_blank"
+          rel="noopener noreferrer">
+          See all repo's in GitHub
+        </a>
 
         <div className='mb-5'>
           {props.userRepos.map((repo, index) => {
@@ -87,9 +95,7 @@ const SelectedUser = (props) => {
         userRepos={props.userRepos}
         actions={props.actions}
       /> : (
-        <React.Fragment>
-          <p>No userdata here ....</p>
-        </React.Fragment>
+        <></>
       )
 
   );

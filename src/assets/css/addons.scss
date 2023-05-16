@@ -4,21 +4,71 @@
 // This is to accomodate things that are not in Bulma
 /////////////////////////////////////////////////////
 
-html { overflow: hidden;}
+@media all and (min-width: 769px) {
+  html {
+    overflow: hidden;
+  }
 
-.is-fullheight {
-  height: 100vh;
-}
-
-@media all and (max-width: 768px) {
   .is-fullheight {
-    height: auto;
+    height: 100vh;
+  }
+
+  .is-maxheight {
+    height: 100%;
+  }
+
+  .border-right {
+    border-right: 1rem solid #dbdbdb;
+    background-color: white;
+  }
+
+  .border-left {
+    border-left: 1rem solid white;
+    background-color: white;
+  }
+
+  .cap-height {
+    max-height: 100vh;
+    overflow-y: auto;
+    display: block;
+  }
+
+  .is-absolute {
+    position: absolute;
+    z-index: 100;
+
+    &.is-visible {
+      animation-name: flyout-modal;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+      right: -66.66%;
+    }
+
+    &.is-visually-hidden {
+      animation-name: flyout-modal-back;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+      right: 0%;
+    }
+  }
+
+  .close-flyout-menu {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: calc(33% - 0.75rem);
+    height: 100%;
+    padding: 0px;
+    opacity: 0.4;
+    border-radius: 0px;
+    background-color: #000000;
+
+    span {
+      display: none;
+    }
   }
 }
 
-.is-maxheight {
-  height: 100%;
-}
 
 .border {
   border: 2px solid #dbdbdb;
@@ -28,20 +78,10 @@ html { overflow: hidden;}
     margin: -2px !important;
     padding: 2px !important;
   }
-  
+
   .input {
     border: none !important;
   }
-}
-
-.border-right {
-  border-right: 1rem solid #dbdbdb;
-  background-color: white;
-}
-
-.border-left {
-  border-left: 1rem solid white;
-  background-color: white;
 }
 
 @media all and (max-width: 1128px) {
@@ -54,44 +94,40 @@ html { overflow: hidden;}
   html {
     font-size: 12px;
   }
+  .is-hidden-on-mobile { display: none; }
+  .close-flyout-menu {
+    width: 100%;
+    height: 60px;
+    padding: 0px;
+    border: none;
+    left: 0px;
+    text-align: center;
+    color: white;
+    background-color: #000000;
+  }
+  .theme_background { display: none; }
 }
 
 @keyframes flyout-modal {
-  0% { right: -66.66%; }
-  100% { right: 0%; }
-}
-
-@keyframes flyout-modal-back {
-  0% { right: 0%; }
-  100% { right: -66.66%; }
-}
-
-.is-absolute {
-  position: absolute;
-  z-index: 10;
-
-  &.is-visible {
-    animation-name: flyout-modal;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
+  0% {
     right: -66.66%;
   }
 
-  &.is-visually-hidden {
-    animation-name: flyout-modal-back;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
+  100% {
     right: 0%;
   }
 }
 
-.close-flyout-menu {
-  position: fixed;
-  top: 0px;
-  margin-left: calc(-2.45em - 60px);
+@keyframes flyout-modal-back {
+  0% {
+    right: 0%;
+  }
+
+  100% {
+    right: -66.66%;
+  }
 }
 
-.cap-height {
-  max-height: 100vh;
-  overflow-y: auto;
+.text-center {
+  text-align: center;
 }

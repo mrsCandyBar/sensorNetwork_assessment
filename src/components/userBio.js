@@ -4,7 +4,6 @@ const SelectedUserBio = (props) => {
     const {
         avatar_url,
         login,
-        html_url,
         name,
         bio,
         followers,
@@ -17,7 +16,11 @@ const SelectedUserBio = (props) => {
             <img src={avatar_url} alt={login} />
             <p>
                 {login && (
-                    <a href={html_url}>
+                    <a
+                        href={"https://github.com/" + login}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <big className='title button is-black is-large'>
                             {login}
                             {name && (

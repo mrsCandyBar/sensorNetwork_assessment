@@ -3,17 +3,21 @@ import {
     search, searchAction,
     getUser, getUserAction,
     getUserRepos, getUserReposAction,
+    error, clearErrorAction
 } from '../../actions/gitHubApi';
 
 const initialState = {
     users: null,
     selectedUser: null,
     selectedUserRepos: [],
+    error: null
 }
+
 export const actionCreators = {
     search: searchAction,
     getUser: getUserAction,
     getUserRepos: getUserReposAction,
+    clearError: clearErrorAction
 }
 
 export function reducer(state = initialState, action) {
@@ -27,6 +31,9 @@ export function reducer(state = initialState, action) {
 
             case getUserRepos:
                 return assign({ ...state }, { selectedUserRepos: action.data });
+
+            case error:
+                return assign({ ...state }, { error: action.data });
 
             default:
                 return state;

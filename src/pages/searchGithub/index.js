@@ -18,7 +18,7 @@ const SearchGitHub = (props) => {
     props.search(
       username ? username : searchname,
       resultsPerPull,
-      count ? count : 0
+      count ? count : 1
     );
 
     if (username) {
@@ -31,7 +31,7 @@ const SearchGitHub = (props) => {
     username && await props.getUserRepos(
       username,
       repoResultsPerPull,
-      count ? count : 0
+      count ? count : 1
     );
     setSelectedUser(username);
   }
@@ -40,50 +40,68 @@ const SearchGitHub = (props) => {
     await props.getUserRepos(
       selectedUser,
       repoResultsPerPull,
-      count ? count : 0
+      count ? count : 1
     );
   }
 
   return (
-    <Layout
-      mainSidebar={(
-        <Search
-          action={(username) => submitQuery(username)}
-          noMoreAttemptsLeft={props.noMoreAttemptsLeft}
-        />
+    <div>
+      {props.error && (
+        <div className={"modal " + (props.error ? "is-active" : "")}>
+          <div className="modal-background"></div>
+          <div className="modal-content">
+            <div className="box text-center pt-5 pb-5">
+              <p className='block'><b>{props.error.message}</b></p>
+              <p className='block'>
+                {props.error.response.data.message}<br />
+                <small>Go to <a href={props.error.response.data.documentation_url} target="_blank" rel="noreferrer">GitHub Api docs</a></small>
+              </p>
+              <button className='button is-black block text-right' onClick={() => props.clearError()}>go back to results</button>
+            </div>
+          </div>
+        </div>
       )}
 
-      mainContainer={(
-        <Results
-          actions={{
-            selectUser: (username) => selectUser(username),
-            updateUserResults: (count) => submitQuery(null, count)
-          }}
-          resultsPerPull={resultsPerPull}
-          results={props.users}
-        />
-      )}
+      <Layout
+        mainSidebar={(
+          <Search
+            action={(username) => submitQuery(username)}
+            noMoreAttemptsLeft={props.noMoreAttemptsLeft}
+          />
+        )}
 
-      selectedContentToggle={props.selectedUser}
-      selectedContent={(
-        <>
-          {props.selectedUser && (
-            <div
-              className='is-maxheight is-fullwidth theme_background'
-              style={{ backgroundImage: "url(" + props.selectedUser.avatar_url + ")" }} />
-          )}
-          <SelectedUser
+        mainContainer={(
+          <Results
             actions={{
               selectUser: (username) => selectUser(username),
-              updateRepoResults: (count) => selectUserRepos(count)
+              updateUserResults: (count) => submitQuery(null, count)
             }}
-            repoResultsPerPull={repoResultsPerPull}
-            user={props.selectedUser}
-            userRepos={props.selectedUserRepos}
+            resultsPerPull={resultsPerPull}
+            results={props.users}
           />
-        </>
-      )}
-    />
+        )}
+
+        selectedContentToggle={props.selectedUser}
+        selectedContent={(
+          <>
+            {props.selectedUser && (
+              <div
+                className='is-maxheight is-fullwidth theme_background'
+                style={{ backgroundImage: "url(" + props.selectedUser.avatar_url + ")" }} />
+            )}
+            <SelectedUser
+              actions={{
+                selectUser: (username) => selectUser(username),
+                updateRepoResults: (count) => selectUserRepos(count)
+              }}
+              repoResultsPerPull={repoResultsPerPull}
+              user={props.selectedUser}
+              userRepos={props.selectedUserRepos}
+            />
+          </>
+        )}
+      />
+    </div>
   );
 }
 
@@ -91,7 +109,8 @@ export default connect(
   (state) => ({
     users: state.gitHub.users,
     selectedUser: state.gitHub.selectedUser,
-    selectedUserRepos: state.gitHub.selectedUserRepos
+    selectedUserRepos: state.gitHub.selectedUserRepos,
+    error: state.gitHub.error
   }),
   dispatch => bindActionCreators(actionCreators, dispatch)
 )(SearchGitHub);
