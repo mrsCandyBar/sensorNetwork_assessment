@@ -33,4 +33,4 @@ All time estimates are given in GMT+2, South African timezones
 10/05/2023: 2:34pm - 3:57pm  (Project setup, pulling API data and modelling data for implementation)  
 11/05/2023: 8:54am - 16:15pm (Theming and adding API requests)  
 15/05/2023: 9:45am - 15:45pm (Adding pagination and Cleanup unrequired files)  
-16/05/2023: 8:50am - 14:15pm (Seperating components into view and functional, adding mobile tweaks, adding icons and final fixes... for now)
+16/05/2023: 8:50am - 14:15pm (Seperating components into view and functional, adding mobile tweaks, adding icons and final fixes... for now..)
